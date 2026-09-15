@@ -6,6 +6,12 @@
 <title>Fichas de RPG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<!-- Verificação de sessão imediata, antes de carregar qualquer JS -->
+<script>
+  if (!sessionStorage.getItem("logado")) {
+    window.location.replace("login.html");
+  }
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -819,22 +825,9 @@ async function salvarTudo(toast = true) {
   if (toast) showToast('Fichas salvas!');
 }
 
-async function carregarTudo() {
-  const snap = await get(ref(db, 'fichas'));
-  if (snap.exists()) {
-    const data = snap.val();
-    fichas = Object.values(data);
-  } else {
-    fichas = [];
-  }
-}
-
+// onValue escuta em tempo real e atualiza a home automaticamente
 onValue(ref(db, 'fichas'), snap => {
-  if (snap.exists()) {
-    fichas = Object.values(snap.val());
-  } else {
-    fichas = [];
-  }
+  fichas = snap.exists() ? Object.values(snap.val()) : [];
   if (document.getElementById('home').classList.contains('active')) {
     renderHome();
   }
@@ -1164,8 +1157,7 @@ function renderHome() {
       : 'O mestre ainda não criou nenhuma ficha.';
     return;
   }
-  empty.style.display = 'none';
-  list.innerHTML = fichas.map(f => {
+  empty.style.display = 'none';  list.innerHTML = fichas.map(f => {
     const initials = (f.nome||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
     const fotos = Array.isArray(f.fotos) ? f.fotos : (f.foto ? [f.foto] : []);
     const avatarContent = fotos.length
@@ -1413,7 +1405,6 @@ function showToast(msg) {
 document.getElementById('loadingOverlay').style.display = 'none';
 showScreen('home');
 renderHome();
-carregarTudo(); // carrega dados em background
 
 // Timeout de segurança — esconde loading após 3s mesmo sem Firebase
 setTimeout(() => {
