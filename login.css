@@ -8,6 +8,8 @@ body {
   align-items: center;
   min-height: 100vh;
   color: #fff;
+  /* Mostra conteúdo imediatamente */
+  visibility: visible;
 }
 
 .login-box {
