@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login — Path of Stars</title>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firebaseapp.com" crossorigin>
 <link rel="stylesheet" href="login.css">
 </head>
 <body>
@@ -87,7 +89,13 @@ async function logar() {
 
 window.logar = logar;
 document.addEventListener("keydown", e => { if (e.key === "Enter") logar(); });
-garantirUsuariosPadrao();
+// garantirUsuariosPadrao roda só se login falhar (não bloqueia carregamento)
+async function tentarCriarUsuarios() {
+  try {
+    await garantirUsuariosPadrao();
+  } catch(e) { /* silencioso */ }
+}
+tentarCriarUsuarios();
 </script>
 </body>
 </html>
