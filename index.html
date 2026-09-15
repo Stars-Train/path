@@ -1364,14 +1364,16 @@ function exportarFicha() {
     modal = document.createElement('div');
     modal.id = 'exportModal';
     modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:5000;align-items:center;justify-content:center;padding:1rem;flex-direction:column';
-    modal.innerHTML = '<div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;gap:12px">'
-      +'<div style="font-family:'Cinzel',serif;font-size:14px;color:var(--gold);letter-spacing:.5px">📄 Exportar Ficha</div>'
-      +'<textarea id="exportTxt" style="flex:1;min-height:300px;font-family:monospace;font-size:12px;resize:vertical;line-height:1.5;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:10px" readonly></textarea>'
-      +'<div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">'
-      +'<button onclick="copiarExporte()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--gold);font-family:'Cinzel',serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);cursor:pointer">📋 Copiar</button>'
-      +'<button onclick="baixarExporte()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--gold);font-family:'Cinzel',serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);cursor:pointer">⬇ Baixar .txt</button>'
-      +'<button onclick="document.getElementById('exportModal').style.display='none'" style="background:transparent;border:1px solid var(--border);color:var(--text3);font-family:'Cinzel',serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);cursor:pointer">Fechar</button>'
-      +'</div></div>';
+    modal.innerHTML = [
+      '<div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;gap:12px">',
+      '<div style="font-family:Cinzel,serif;font-size:14px;color:var(--gold);letter-spacing:.5px">&#128196; Exportar Ficha</div>',
+      '<textarea id="exportTxt" style="flex:1;min-height:300px;font-family:monospace;font-size:12px;resize:vertical;line-height:1.5;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:10px" readonly></textarea>',
+      '<div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">',
+      '<button onclick="copiarExporte()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--gold);font-family:Cinzel,serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);cursor:pointer">&#128203; Copiar</button>',
+      '<button onclick="baixarExporte()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--gold);font-family:Cinzel,serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);cursor:pointer">&#11015; Baixar .txt</button>',
+      '<button onclick="document.getElementById(\'exportModal\').style.display=\'none\'" style="background:transparent;border:1px solid var(--border);color:var(--text3);font-family:Cinzel,serif;font-size:12px;padding:7px 16px;border-radius:var(--radius);cursor:pointer">Fechar</button>',
+      '</div></div>'
+    ].join('');
     document.body.appendChild(modal);
   }
   document.getElementById('exportTxt').value = txt;
